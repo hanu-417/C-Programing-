@@ -1,0 +1,84 @@
+struct hashData { int num; int count; };
+
+static int hashFunc(int num)
+{
+	int N = 20000;
+	int key = 0;
+
+	if ( num == 0 )
+		return 0;
+
+	num = abs( num );
+	while ( num != 0 )
+	{
+		key = ( key * 31 + num % 10 ) % N;
+		num /= 10;
+	}
+
+	return key;
+}
+
+static void insertHash(struct hashData **hash, int num)
+{
+	int key = hashFunc( num ), insert = 0;
+
+	while ( hash[key] != NULL )
+	{
+		if ( hash[key]->num == num )
+		{
+			hash[key]->count += 1;
+			insert = 1;
+			break;
+		}
+
+		key += 1;
+	}
+
+	if ( insert == 0 )
+	{
+		hash[key] = malloc( sizeof( struct hashData ) );
+
+		hash[key]->num = num;
+		hash[key]->count = 1;
+	}
+}
+
+static struct hashData *findHash(struct hashData **hash, int num)
+{
+	int key = hashFunc( num );
+
+	while ( hash[key] != NULL )
+	{
+		if ( hash[key]->num == num )
+			return hash[key];
+		
+		key++;
+	}
+
+	return 	NULL;
+}
+
+int findLHS(int *nums, int numsSize)
+{
+	struct hashData **hash = calloc( 40000, sizeof( struct hashData * ) ), *curr, *this;
+	int i, max = 0;
+
+	for ( i = 0; i < numsSize; i++ )
+		insertHash( hash, nums[i] );
+
+	for ( i = 0; i < numsSize; i++ )
+	{
+		curr = findHash( hash, nums[i] );
+		
+		int aux[2] = { 1, -1 };
+		for ( int j = 0; j < 2; j++ )
+		{
+			this = findHash( hash, nums[i] + aux[j] );
+
+			if ( this != NULL && ( this->count + curr->count > max ) )
+				max = this->count + curr->count;
+		}
+	}
+
+	return max;
+}
