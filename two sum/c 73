@@ -1,0 +1,53 @@
+#define X_AB  0
+#define Y_AB  1
+
+#define X_AC  0
+#define Y_AC  1
+
+int computeDeterminant(int *vectorAB, int *vectorAC) {
+  return (vectorAB[0] * vectorAC[1]) - (vectorAB[1] * vectorAC[0]);
+}
+
+double getArea(int *a, int *b, int *c) {
+  int vectorAB[2];
+  int vectorAC[2];
+  int determinant;
+  double magnitudeOfCrossProduct;
+  
+  vectorAB[X_AB] = b[0] - a[0];
+  vectorAB[Y_AB] = b[1] - a[1];
+  
+  vectorAC[X_AC] = c[0] - a[0];
+  vectorAC[Y_AC] = c[1] - a[1];
+  
+  // When computing the cross product of 2D vectors, it produces a 3D vector with the value from the
+  // third dimension being non-zero while the values from the first and second dimensions are zero.
+  // The determinant variable is only storing the value from the third dimension, and this is why
+  // an array is not used to store the result. This can be treated as a 1D vector.
+  determinant = computeDeterminant(vectorAB, vectorAC);
+  
+  // The result also represents an area of a parallelogram.
+  magnitudeOfCrossProduct = sqrt(pow(determinant, 2));
+  
+  // Divide the area by two to get the area of a triangle
+  return magnitudeOfCrossProduct / 2;
+}
+
+double largestTriangleArea(int** points, int pointsSize, int* pointsColSize){
+  double maxArea = 0;
+  double area = 0;
+  
+  for (int i = 0; i < pointsSize; i++) {
+    for (int j = i + 1; j < pointsSize; j++) {
+      for (int k = j + 1; k < pointsSize; k++) {
+        area = getArea(points[i], points[j], points[k]);
+        
+        if (area > maxArea) {
+          maxArea = area;
+        }
+      }
+    }
+  }
+  
+  return maxArea;
+}
