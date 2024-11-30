@@ -1,0 +1,25 @@
+int minDeletionSize(char** strs, int strsSize) {
+    int rows = strsSize , check = 0 , count = 0;
+    int *rep = (int*)malloc(sizeof(int) * 500);
+    int columns = strlen(strs[0]);
+    printf("r = %d , c = %d\n",rows,columns);
+    for(int i = 0; i < rows - 1; i++)
+    {
+        for(int j = 0; j < columns; j++)
+        {
+            for(int i = 0; i < check; i++)
+            {
+                if(j == rep[i])
+                    count++;
+            }
+            if(count == 0)
+            {
+                if(strs[i][j] > strs[i+1][j])
+                rep[check++] = j;
+            }  
+            count = 0;  
+        }
+    } 
+    free(rep);
+    return check;
+}
