@@ -1,0 +1,34 @@
+
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* numberOfLines(int* widths, int widthsSize, char * s, int* returnSize){
+int w=widthsSize;
+int *result=(int *)malloc(2*sizeof(int));
+int count = 1;
+int ls=0;
+int i;
+
+    while(*s != '\0' )
+    {     
+        i=(int)*s -97;
+        ls = ls + widths[i];
+        if(ls>100)
+        {
+            count++;
+            ls=0;
+        } 
+        else
+        {
+            s++;
+        } 
+    }
+
+
+
+*returnSize=2;
+result[0]=count;
+result[1]=ls;
+return result;
+}
