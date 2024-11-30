@@ -1,0 +1,38 @@
+bool lemonadeChange(int* bills, int billsSize) {
+    int start = 0, end = 0;
+
+    for(int i = 0; i < billsSize; i++) {
+        if(bills[i] == 20) {
+            int new_bill = 15;
+            if(start > 0) {
+                new_bill -= 10;
+                start--;
+            }
+            
+            while(new_bill > 0 && end > 0) {
+                new_bill -= 5;
+                end--;
+            }
+
+            if(new_bill > 0) {
+                return false;
+            }
+
+            continue;
+        }
+
+        if(bills[i] == 10) {
+            if(end > 0) {
+                start++;
+                end--;
+                continue;
+            }
+
+            return false;
+        }
+        
+        end++;
+    }
+
+    return true;
+}
