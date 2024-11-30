@@ -1,0 +1,13 @@
+int dominantIndex(int* nums, int numsSize){
+    int max = INT_MIN, secondMax = INT_MIN, maxIndex = -1;
+    for(int i = 0; i < numsSize; i++) {
+        if(nums[i] > max) {
+            secondMax = max;
+            max = nums[i];
+            maxIndex = i;
+        } else if(nums[i] > secondMax) {
+            secondMax = nums[i];
+        }
+    }
+    return secondMax <= (max / 2) ? maxIndex : -1;
+}
