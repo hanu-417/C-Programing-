@@ -1,0 +1,11 @@
+bool isToeplitzMatrix(int** matrix, int matrixSize, int* matrixColSize) {
+    //int r = 0, c = 0;
+    for(int r = 0; r < matrixSize; r++) {
+        for(int c = 0; c < matrixColSize[r]; c++) {
+            if(r + 1 < matrixSize && c + 1 < matrixColSize[r + 1])
+                if(matrix[r][c] != matrix[r + 1][c + 1])
+                    return false;
+        }
+    }
+    return true;
+}
