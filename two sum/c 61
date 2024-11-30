@@ -1,0 +1,158 @@
+#define HASH_SIZE 1000
+
+struct hashNode
+{
+    int key;
+    struct hashNode * next;
+};
+
+
+typedef struct 
+{
+    struct hashNode ** hashtable;
+} MyHashSet;
+
+
+MyHashSet* myHashSetCreate() 
+{
+    MyHashSet * obj = (MyHashSet *)malloc(sizeof(MyHashSet));
+    obj->hashtable = (struct hashNode **)malloc(sizeof(struct hashNode *) * HASH_SIZE);
+    int i=0;
+    for(i=0; i<HASH_SIZE; i++)
+        obj->hashtable[i] = NULL;
+    return obj;    
+}
+
+int find_hash_index(int val)
+{
+    return (val % HASH_SIZE);
+}
+
+void myHashSetAdd(MyHashSet* obj, int key) 
+{
+    int hash_index = find_hash_index(key);    
+    if(obj->hashtable[hash_index] == NULL)  //Index is empty
+    {
+        struct hashNode * new_node = (struct hashNode *)malloc(sizeof(struct hashNode));
+        new_node->key = key;
+        new_node->next = NULL;
+        obj->hashtable[hash_index] = new_node;
+        return;
+    }
+
+    struct hashNode * prev = NULL;
+    struct hashNode * trav = obj->hashtable[hash_index];
+    while(trav)
+    {
+        if(trav->key == key)
+            return;
+        else if(key > trav->key)
+        {
+            prev = trav;
+            trav = trav->next;
+        }
+        else if(key < trav->key)
+        {
+            struct hashNode * new_node = (struct hashNode *)malloc(sizeof(struct hashNode));
+            new_node->key = key;
+            
+            if(prev == NULL)
+            {
+                obj->hashtable[hash_index] = new_node;
+                new_node->next = trav;
+                return;
+            }
+            else
+            {
+                prev->next = new_node;
+                new_node->next = trav;
+                return;
+            }
+        }
+    }
+
+    //Insertion at the end
+    struct hashNode * new_node = (struct hashNode *)malloc(sizeof(struct hashNode));
+    new_node->key = key;
+    new_node->next = NULL;
+    prev->next = new_node;
+    return;
+}
+
+void myHashSetRemove(MyHashSet* obj, int key) 
+{
+    int hash_index = find_hash_index(key); 
+    if(obj->hashtable[hash_index] == NULL)
+        return;
+
+    struct hashNode * prev = NULL;
+    struct hashNode * trav = obj->hashtable[hash_index];
+
+    while(trav)
+    {
+        if(trav->key == key)
+        {
+            struct hashNode * del_node = trav;
+            
+            if(prev == NULL)
+            {
+                trav = trav->next;
+                obj->hashtable[hash_index] = trav;
+            }
+            else
+            {
+                trav = trav->next;
+                prev->next = trav;
+            }
+            
+            free(del_node);
+            return;
+        }
+        else if(key > trav->key)
+        {
+            prev = trav;
+            trav = trav->next;
+        }
+        else if(key < trav->key)
+            return;
+    }
+    return;
+}
+
+bool myHashSetContains(MyHashSet* obj, int key) 
+{
+    int hash_index = find_hash_index(key);    
+    struct hashNode * trav = obj->hashtable[hash_index];
+    if(trav == NULL)
+        return false;
+
+    while(trav)
+    {
+        if(key > trav->key)
+        {
+            trav = trav->next;
+        }
+        else if(key == trav->key)
+            return true;
+        else if(key < trav->key)
+            return false;
+    }
+    return false;
+}
+
+void myHashSetFree(MyHashSet* obj) {
+    free(obj->hashtable);
+    free(obj);
+}
+
+/**
+ * Your MyHashSet struct will be instantiated and called as such:
+ * MyHashSet* obj = myHashSetCreate();
+ * myHashSetAdd(obj, key);
+ 
+ * myHashSetRemove(obj, key);
+ 
+ * bool param_3 = myHashSetContains(obj, key);
+ 
+ * myHashSetFree(obj);
+*/
