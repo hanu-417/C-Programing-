@@ -1,0 +1,31 @@
+int cmpstr(const void* a, const void*b){  
+    return strcmp(*(const char**)a, *(const char**)b);
+}
+
+int uniqueMorseRepresentations(char ** words, int wordsSize){
+    int c = 1;
+	
+	// Morse code alphabet
+    const char* Malph[26] = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."}; 
+    
+    char** Mwords = (char**) malloc(sizeof(char*) * wordsSize);  // words array for translated strings
+    for (int i = 0; i < wordsSize; i++)
+    {
+        Mwords[i] = (char*) calloc((strlen(words[i]) * 4) + 1, sizeof(char)); // allocate space for translated word (upper bound for a translated char is 4) and null char
+        for (int j = 0; words[i][j] != '\0'; j++) strcat(Mwords[i], Malph[words[i][j] - 'a']); // translate char from words array and concatenate translated char to Mwords array. Result is a translated word (i.e. translate words[i])
+    }
+    
+    qsort(Mwords, wordsSize, sizeof(char**), cmpstr); // Sort strings by lexicographic equality
+	
+	// Count number of lexicographically inequal strings 
+    for (int i = 1; i < wordsSize; i++)
+    {
+        if (strcmp(Mwords[i], Mwords[i - 1])) c++;
+        free(Mwords[i - 1]);
+    }
+    
+    free(Mwords[wordsSize - 1]);
+    free(Mwords);
+    
+    return c;
+}
