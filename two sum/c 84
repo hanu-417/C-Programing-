@@ -1,0 +1,9 @@
+int smallestRangeI(int* nums, int numsSize, int k) {
+    int maxv = -1;
+    int minv = 10001;
+    for(int i = 0;i<numsSize;i++){
+        maxv = fmax(maxv, nums[i]);
+        minv = fmin(minv, nums[i]);
+    }
+    return (maxv-k) - (minv+k) < 0 ? 0: ((maxv-k) - (minv+k));
+}
