@@ -1,0 +1,43 @@
+void bubblesort(int arr[],int n){
+    for(int i=0;i<n-1;i++){
+        for(int j=0;j<n-i-1;j++){
+            if(arr[j]>arr[j+1]){
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+
+int cheaktri(int a, int b, int c){
+    if(a + b > c){
+        if(a + c > b){
+            if(b + c > a)
+                return 1;
+        }
+    }
+    else
+        return 0;
+    return 0;
+}
+int largestPerimeter(int* nums, int numsSize) {
+    bubblesort(nums, numsSize);
+    int a = numsSize -1, b = numsSize -2, c = numsSize -3;
+    while(b > 0){
+        if(cheaktri(nums[a], nums[b], nums[c])){
+            return nums[a] + nums[b] + nums[c];
+        }
+        else{
+            if(c == 0){
+                b--;
+                a--;
+                c = b - 1;
+
+            }
+             else
+                c--;
+        }
+    }
+    return 0;
+}
