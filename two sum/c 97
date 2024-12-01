@@ -1,0 +1,55 @@
+int numRookCaptures(char** board, int boardSize, int* boardColSize){
+    for (int row_idx = 0; row_idx < boardSize; row_idx ++) {
+        for (int col_idx = 0; col_idx < 8; col_idx ++) {
+            if (board[row_idx][col_idx] == 'R') {
+                int count = 0;
+                for (int top_row = 1; top_row <= row_idx; top_row ++) {
+                    int row = row_idx - top_row;
+                    char value = board[row][col_idx];
+                    if (value == 'p') {
+                        count ++;
+                        break;
+                    }
+                    else if (value != '.' ) {
+                        break;
+                    }
+                }
+                for (int bottom_row = 1; bottom_row < boardSize - row_idx; bottom_row ++) {
+                    int row = row_idx + bottom_row;
+                    char value = board[row][col_idx];
+                    if (value == 'p') {
+                        count ++;
+                        break;
+                    }
+                    else if (value != '.' ) {
+                        break;
+                    }
+                }
+                for (int left_col = 1; left_col <= col_idx; left_col ++ ) {
+                    int col = col_idx - left_col;
+                    char value = board[row_idx][col];
+                    if (value == 'p' ) {
+                        count ++;
+                        break;
+                    }
+                    else if (value != '.' ) {
+                        break;
+                    }
+                }
+                for (int right_col = 1; right_col < 8 - col_idx; right_col ++) {
+                    int col = col_idx + right_col;
+                    char value = board[row_idx][col];
+                    if (value == 'p' ) {
+                        count ++;
+                        break;
+                    }
+                    else if (value != '.' ) {
+                        break;
+                    }
+                }
+                return count;
+            }
+        }
+    }
+    return 0; 
+}
