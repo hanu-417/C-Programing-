@@ -1,0 +1,13 @@
+int compare(const void *a,const void *b){
+        return (*(int *)a - *(int *)b);
+    }
+double trimMean(int* arr, int arrSize){
+    qsort(arr,arrSize,sizeof(int),compare);
+    int trim=arrSize*0.05;
+    double sum=0.0;
+    for(int i=trim;i<arrSize-trim;i++){
+        sum+=arr[i];
+    }
+    int count=arrSize-2*trim;
+    return sum/count;
+}
