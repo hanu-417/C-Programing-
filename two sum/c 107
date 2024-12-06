@@ -1,0 +1,61 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int check(int cmp, int *res, int k)
+{
+    int i = 0;
+    while (i < k)
+    {
+        if (cmp == res[i])
+            return (0);
+        i++;
+    }
+	// printf("***%d****\n", cmp);
+    return (1);
+}
+
+int cmpfunc (const void * a, const void * b) {
+   return ( *(int*)a - *(int*)b );
+}
+
+int* relativeSortArray(int* arr1, int arr1Size, int* arr2, int arr2Size, int *returnSize) {
+    int *res = (int *)malloc(sizeof(int) * arr1Size);
+    int i = 0;
+    int k = 0;
+    while (i < arr2Size)
+    {
+        int j = 0;
+        while (j < arr1Size)
+        {
+            if (arr2[i] == arr1[j])
+            {
+                res[k] = arr2[i];
+                k++;
+            }
+            j++;
+        }
+        i++;
+    }
+    int *join = (int *)malloc(sizeof(int) * (arr1Size - k));
+    i = 0;
+    int j = 0;
+    while (i < arr1Size)
+    {
+        if (check(arr1[i], res, k) == 1)
+        {
+            join[j] = arr1[i];
+            j++;
+        }
+        i++;
+    }
+   qsort(join, arr1Size - k, sizeof(int), cmpfunc);
+    i = 0;
+    while (k < arr1Size)
+    {
+        res[k] = join[i];
+        k++;
+        i++;
+    }
+    *returnSize = arr1Size;
+    return (res);
+}
