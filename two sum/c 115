@@ -1,0 +1,23 @@
+int oddCells(int m, int n, int** indices, int indicesSize, int* indicesColSize) {
+    int odd = 0;
+    int **mat = (int**)malloc(sizeof(int*)*m);  //Create Rows
+    for(int i = 0; i < m; i++)
+        mat[i] = (int*)malloc(sizeof(int)*n);   //Create Columns
+    for(int i = 0; i < m; i++){                 //Initialize to all 0's
+        for(int j = 0; j < n; j++){
+            mat[i][j] = 0;
+        }
+    }
+    for(int i = 0; i < indicesSize; i++){
+        for(int j = 0; j < n; j++)
+            mat[indices[i][0]][j]++;    //Increment row ri (ri = indices[i][0])
+        for(int j = 0; j < m; j++)
+            mat[j][indices[i][1]]++;    //Increment column ci (ci = indices[i][1])
+    }
+    for(int i = 0; i < m; i++){         //Obtain the number of odds
+        for(int j = 0; j < n; j++){
+            if(mat[i][j] % 2) odd++;
+        }
+    }
+    return odd;
+}
