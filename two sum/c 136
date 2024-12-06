@@ -1,0 +1,23 @@
+int minStartValue(int* nums, int numsSize) {
+    int s;
+    int f;
+    for(int i=1;i<=20000;i++)
+    {
+        s=i;
+        f=1;
+      for(int j=0;j<numsSize;j++)
+      {
+        s=s+nums[j];
+        if(s<1)
+        {
+            f=0;
+            break;
+        }
+      }
+      if(f==1)
+      {
+        return i;
+      }
+    }
+    return 0;
+}
