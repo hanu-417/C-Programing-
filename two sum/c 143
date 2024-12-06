@@ -1,0 +1,19 @@
+int* finalPrices(int* prices, int pricesSize, int* returnSize) {
+  int *returnArray = (int *)malloc(pricesSize * sizeof(int));
+  *returnSize = 0;
+  for(int i = 0; i < pricesSize; i++){
+    bool flag = false;
+    for(int j = i+1; j < pricesSize ; j++){
+      if(prices[i] >= prices[j]){
+        returnArray[(*returnSize)++] =  prices[i] - prices[j];
+        flag = true;
+        break;
+      }
+    }
+    if(flag == false){
+      returnArray[(*returnSize)++] = prices[i];
+    }
+
+  }
+  return returnArray;
+}
