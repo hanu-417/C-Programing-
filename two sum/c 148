@@ -1,0 +1,13 @@
+char* restoreString(char* s, int* indices, int indicesSize) {
+    char s1[indicesSize+1];
+    for(int i=0;i<indicesSize;i++)
+    {
+        s1[indices[i]]=s[i];
+    }
+    for(int i=0;i<indicesSize;i++)
+    {
+        s[i]=s1[i];
+    }
+    return s;
+    
+}
