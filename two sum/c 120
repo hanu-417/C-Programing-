@@ -1,0 +1,16 @@
+int findNumbers(int* nums, int numsSize) {
+    int i,j,temp;
+    int count,ans = 0;
+    for(i=0;i<numsSize;i++){
+        temp = nums[i];
+        count = 0;
+        while(temp){
+            temp/=10;
+            count++;
+        }
+        if(count%2==0)
+        ans++;
+    }
+    //printf("%d ",ans);
+return ans;
+}
