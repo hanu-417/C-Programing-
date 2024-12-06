@@ -1,0 +1,64 @@
+
+int bs_func(int *row, int cols)
+{
+    // binary search first row
+    int left = 0;
+    int right = cols -1;
+
+    int cidx = 0;
+    while(left <= right)
+    {
+        int mid = left + (right - left)/2;
+        if(row[mid] < 0  && (mid == 0 || row[mid-1] >= 0) )
+        {
+            return mid;   
+        }
+        else if(row[mid] >= 0)
+        {
+            left = mid + 1;
+        }
+        else{
+            right = mid-1;
+        }
+    }
+
+    return cols;
+
+}
+
+int countNegatives(int** grid, int gridSize, int* gridColSize){
+    /*
+        if num[rx,cx] is negative , all num[rx, cx : n] will be negative
+        and all num[rx:n, cx] will be negative
+
+         4  3 2 -1 -2 -3 -4 
+         3  2 1 -1 -2 -3 -4
+         1  1 -1 -2 -3 -4 -5
+        -1 -1 -2 -3 -4 -5 -6
+    */
+    int rows = gridSize;
+    int cols = gridColSize[0];
+    
+    // first row
+    int cidx = bs_func(grid[0],cols);
+    int count = (cols - cidx) * rows;
+    
+    for(int r = 1; r < rows; r++)
+    {
+        int pidx = bs_func(grid[r], cidx);
+
+        if(pidx < cidx) // another colum with negative values
+            count += (rows - r)*(cidx - pidx);
+        
+        if(pidx == 0) // all rows after this have negative values
+            break;
+
+        cidx = pidx;
+
+    }
+
+
+    return count;
+
+
+}
