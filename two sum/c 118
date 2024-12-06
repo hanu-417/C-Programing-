@@ -1,0 +1,32 @@
+char* tictactoe(int** moves, int movesSize, int* movesColSize) {
+    int row[3]={0},col[3]={0},diag[2]={0};
+    int board=3,count=0;
+    int player,r,c;
+    for (int i=0;i<movesSize;i++) {
+        player=(++count%2==0) ? -1 : 1;
+        r=moves[i][0];
+        c=moves[i][1];
+        row[r]+=player;
+        col[c]+=player;
+        if (r==c)
+            diag[0]+=player;
+        if (r+c==board-1)
+            diag[1]+=player;
+        // check if the move is a winning move starting at count >4
+        if (count>4) {
+            if (abs(row[r])==board) {
+                return (row[r]>0) ? "A" : "B";
+            }
+            if (abs(col[c])==board) {
+                return (col[c]>0) ? "A" : "B";
+            }
+            if (abs(diag[0])==board) {
+                return (diag[0]>0) ? "A" : "B";
+            }
+            if (abs(diag[1])==board) {
+                return (diag[1]>0) ? "A" : "B";
+            }
+        }
+    }
+    return (count==9) ? "Draw" :"Pending";
+}
