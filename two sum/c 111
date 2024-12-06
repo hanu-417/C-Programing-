@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+// Function to compare two integers for sorting
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int** minimumAbsDifference(int* arr, int arrSize, int* returnSize, int** returnColumnSizes) {
+    // Sort the array in ascending order
+    qsort(arr, arrSize, sizeof(int), compare);
+
+    int minDiff = INT_MAX;  // Initialize the minimum absolute difference
+    int pairCount = 0;      // Count of pairs with the minimum absolute difference
+
+    // Find the minimum absolute difference
+    for (int i = 1; i < arrSize; i++) {
+        int diff = arr[i] - arr[i - 1];
+        if (diff < minDiff) {
+            minDiff = diff;
+            pairCount = 1;  // Reset the pair count
+        } else if (diff == minDiff) {
+            pairCount++;    // Increment the pair count for the same minimum difference
+        }
+    }
+
+    // Allocate memory for the result
+    int **result = (int **)malloc(pairCount * sizeof(int *));
+    *returnColumnSizes = (int *)malloc(pairCount * sizeof(int));
+    *returnSize = pairCount;
+
+    int index = 0;
+
+    // Populate the result with pairs having the minimum absolute difference
+    for (int i = 1; i < arrSize; i++) {
+        int diff = arr[i] - arr[i - 1];
+        if (diff == minDiff) {
+            result[index] = (int *)malloc(2 * sizeof(int));
+            result[index][0] = arr[i - 1];
+            result[index][1] = arr[i];
+            (*returnColumnSizes)[index] = 2;
+            index++;
+        }
+    }
+
+    return result;
+}
