@@ -1,0 +1,22 @@
+int uniqueOccurrences(int* arr, int arrSize) {
+    int occurrenceCount[2001] = {0};  // Updated array size
+    
+    // Count the occurrences of each element in 'arr'
+    for (int i = 0; i < arrSize; i++) {
+        occurrenceCount[arr[i] + 1000]++;  // Shift the range to accommodate negative numbers
+    }
+    
+    // Check if the number of occurrences is unique
+    int uniqueCounts[1001] = {0};
+    for (int i = 0; i < 2001; i++) {
+        if (occurrenceCount[i] != 0) {
+            int count = occurrenceCount[i];
+            if (uniqueCounts[count] != 0) {
+                return 0;  // Duplicate occurrences found
+            }
+            uniqueCounts[count] = 1;
+        }
+    }
+    
+    return 1;  // All occurrences are unique
+}
