@@ -1,0 +1,16 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+ // 101 1010 1111
+bool* prefixesDivBy5(int* nums, int numsSize, int* returnSize){
+    bool *res=malloc(sizeof(bool)*numsSize);
+    int sum=0;
+    for(int i=0;i<numsSize;i++){
+        sum=sum*2+nums[i];
+        sum%=10;
+        if(sum==0 || sum==5) res[i]=true;
+        else res[i]=false;
+    }
+    *returnSize=numsSize;
+    return res;
+}
