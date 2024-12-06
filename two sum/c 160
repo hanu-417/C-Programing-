@@ -1,0 +1,20 @@
+char slowestKey(int* t, int n, char* k) {
+    int max=t[0],j=0;
+    for(int i=n-1;i>0;i--){
+        t[i]-=t[i-1];
+    }
+    for(int i=0;i<n;i++){
+        if(max==t[i]){
+            if(k[i]>k[j])                
+                j=i;
+            else
+                j=j;
+
+        }
+        if(max<t[i]){
+        max=t[i];
+        j=i;
+        }
+    }
+    return k[j];
+}
