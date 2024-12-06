@@ -1,0 +1,40 @@
+int FindAChar(char, char*, int);
+int countCharacters(char** words, int wordsSize, char* chars) {
+    int len = strlen(chars);
+    int cnt = 0; //The answer: sum of lengths of all good strings in words
+
+    //Check if a string is good 
+    for(int i = 0; i < wordsSize; i++){
+        if(strlen(words[i]) > len)  continue;   //Go to next string
+
+        //Copy the given string to a temporary string
+            char temp[len+1];
+            strcpy(temp, chars);
+            temp[len] = '\0';
+        
+        //Check if a character appears in chars[]
+        for(int j = 0; j < strlen(words[i]); j++){
+            //Find a character in chars that is as same as one in the string
+            //A character is found and it is the last character in the string
+            if(FindAChar(words[i][j], temp, len)){
+                if(j == strlen(words[i])-1) cnt += strlen(words[i]);
+                //else    continue;   //A character is found but not the last character in the string
+            }  
+            else    break;  //Not found, and go to next string
+        }
+    }
+    return cnt;
+}
+
+int FindAChar(char character, char* chars, int len){
+    int i = 0;
+    while(i < len){
+        if(character == chars[i]){
+            chars[i] = ' ';  //Assign a blank space denoting a used character to the string
+            break;
+        }
+        i++;    //Go to check the next character
+    }
+    if(i == len)    return 0;   //Not found
+    else    return 1;   //Yes!
+}
