@@ -1,0 +1,55 @@
+int countSetBits(int num)
+{
+    int count = 0;
+
+    for (int i = 0; i < sizeof(int)*8; i++)
+    {
+        if (num & 1)
+        {
+            count++;
+        }
+        num = num >> 1;
+    }
+
+    return (count);
+}
+
+void swap(int* a, int* b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* sortByBits(int* arr, int arrSize, int* returnSize) {
+    int *retArr = malloc(sizeof(int) * arrSize);
+    int bitsPrev;
+    int bitsNext;
+
+    for (int i = 0; i < arrSize; i++)
+    {
+        for (int j = 1; j < arrSize; j++)
+        {
+            bitsPrev = countSetBits(arr[j - 1]);
+            bitsNext = countSetBits(arr[j]);
+            if (bitsNext < bitsPrev)
+            {
+                swap(&arr[j], &arr[j - 1]);
+            }
+            else if ((bitsNext == bitsPrev) && (arr[j] < arr[j - 1]))
+            {
+                swap(&arr[j], &arr[j - 1]);
+            
+            }
+        }
+
+        retArr[i] = arr[i];
+    }
+
+    *returnSize = arrSize;
+
+    return arr;
+}
