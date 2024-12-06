@@ -1,0 +1,16 @@
+int findKthPositive(int* arr, int arrSize, int k) {
+    int previousValue = 0; // Holds previous expected value
+    int sumDiff = 0;       // Holds sum for all missing integers
+    for (int i = 0; i < arrSize; i++) {
+        int diff = arr[i] - previousValue; // Determines if integer is missing
+        if (diff > 1) {
+            sumDiff += (diff - 1);
+            if (sumDiff >= k) {
+                return (previousValue + (diff - 1) - (sumDiff - k));
+            }
+        }
+        previousValue = arr[i];
+    }
+    return (arr[arrSize - 1] +
+            (k - sumDiff)); // The missing value is outside of array.
+}
