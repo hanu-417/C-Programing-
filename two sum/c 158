@@ -1,0 +1,19 @@
+// Function to compare two integers for qsort
+int compare(const void *a, const void *b) {
+    return (*(int*)b - *(int*)a);
+}
+
+int specialArray(int* nums, int numsSize) {
+    // Sort the array in descending order
+    qsort(nums, numsSize, sizeof(int), compare);
+    int num = -1;
+
+    for (int x = 1; x <= numsSize; x++) {
+        if (x <= numsSize && nums[x - 1] >= x && (x == numsSize || nums[x] < x)) {
+            num = x;
+            break;
+        }
+    }
+
+    return num;
+}
