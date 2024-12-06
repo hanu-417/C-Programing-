@@ -1,0 +1,23 @@
+bool checkStraightLine(int** coordinates, int coordinatesSize, int* coordinatesColSize) {
+    int row = coordinatesSize;
+    int col =  coordinatesColSize[0];
+    float xrange = coordinates[1][0] - coordinates[0][0];
+    float yrange = coordinates[1][1] - coordinates[0][1];
+    if(xrange == 0 ){
+        for(int i = 2 ; i < row ; i ++){
+        if(coordinates[i][0]!= coordinates[1][0]) return false;
+        }
+    }
+    else {
+        float slope = yrange / xrange;
+        for(int i = 2 ; i < row ; i ++){
+            float x = coordinates[i][0]-coordinates[i-1][0];
+            float y = coordinates[i][1]-coordinates[i-1][1];
+            if(x==0) return false;
+            if((y/x)!= slope) return false;
+            
+        }
+    }
+    
+    return true;
+}
