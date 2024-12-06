@@ -1,0 +1,29 @@
+bool canBeEqual(int* target, int targetSize, int* arr, int arrSize) {
+      if(targetSize!=arrSize){
+        return false;
+    }
+    int temp;
+    for(int i=0;i<arrSize;i++){
+        for(int j=0;j<arrSize-i-1;j++){
+            if(arr[j]>arr[j+1]){
+            temp=arr[j];
+            arr[j]=arr[j+1];
+            arr[j+1]=temp;
+            }
+            
+            if(target[j]>target[j+1]){
+            temp=target[j];
+            target[j]=target[j+1];
+            target[j+1]=temp;
+            }
+        }
+    }
+    
+    for(int i=0;i<arrSize;i++){
+        if(arr[i]!=target[i]){
+            return false;
+        }
+    }
+    
+    return true;
+}
