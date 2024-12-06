@@ -1,0 +1,31 @@
+typedef struct {
+    UT_hash_handle hh;
+    char *city;    
+} hElem;
+
+char* destCity(char*** paths, int pathsSize, int* pathsColSize) {
+    hElem *map = NULL, *t, *c;
+    
+    char *destination;
+    
+    for(int i = 0; i < pathsSize; i++) {
+        char *src = paths[i][0];
+        HASH_FIND_STR(map, src, t);
+        if(!t) {
+            t = calloc(sizeof(hElem), 1);
+            t->city = src;
+            HASH_ADD_STR(map, city, t);
+        }
+    }
+    
+    for(int i = 0; i < pathsSize; i++) {
+        char *dest = paths[i][1];
+        HASH_FIND_STR(map, dest, t);
+        if(!t){
+            destination = dest;
+            break;
+        }
+    }
+    
+    return destination;
+}
