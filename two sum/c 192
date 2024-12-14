@@ -1,0 +1,31 @@
+bool wordContainsPattern(char* word, char* pattern)
+{
+    int patternLength = strlen(pattern);
+    int wordLength = strlen(word);
+    char substr[patternLength + 1];
+
+    memset(substr, '\0', sizeof(substr));
+
+    for (int i = 0; i <= wordLength - patternLength; i++) {
+        strncpy(substr, word + i, patternLength);
+
+        if (strcmp(pattern, substr) == 0) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+int numOfStrings(char** patterns, int patternsSize, char* word)
+{
+    int count = 0;
+
+    for (int i = 0; i < patternsSize; i++) {
+        if (wordContainsPattern(word, patterns[i])) {
+            count++;
+        }
+    }
+
+    return count;
+}
