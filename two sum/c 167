@@ -1,0 +1,22 @@
+bool arrayStringsAreEqual(char** word1, int word1Size, char** word2, int word2Size) {
+    int m=0, n=0, i=0, j=0;
+    do {
+        if (word1[m][i] == '\0') {
+            ++m;
+            i = 0;
+        }
+        if (word2[n][j] == '\0') {
+            ++n;
+            j = 0;
+        }
+        if (m >= word1Size || n >= word2Size) {
+            break;
+        }
+        if (word1[m][i] != word2[n][j]) {
+            return false;
+        }
+        ++i;
+        ++j;
+    } while (1);
+    return m >= word1Size && n >= word2Size;
+}
