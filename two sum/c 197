@@ -1,0 +1,12 @@
+int countKDifference(int* nums, int numsSize, int k){
+    int number[250] = {0};
+    int ans = 0;
+    for(int i = 0 ; i < numsSize ; i++){
+        number[nums[i]]++;
+    }
+    for(int i = 0 ; i < numsSize ; i++){
+		if(nums[i] - k > 0)ans += number[nums[i]-k];
+        if(nums[i] + k <= 100)ans += number[nums[i]+k];
+    }
+    return ans/2;
+}
