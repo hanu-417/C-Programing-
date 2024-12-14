@@ -1,0 +1,20 @@
+int maximumDifference(int* nums, int numsSize) {
+    // first find min element and respectively index
+    int i = 0;
+    int min = INT_MAX;
+    int max = INT_MIN;
+    int diff = 0;
+    while(i < numsSize){
+        if(nums[i] < min){
+            min = nums[i];
+        }
+        diff = nums[i]  - min;
+        max = fmax(max, diff);
+        ++i;
+    }
+    if(max <= 0) {
+        return -1;
+    }else{
+        return max;
+    }
+}
