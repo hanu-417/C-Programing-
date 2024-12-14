@@ -1,0 +1,5 @@
+int subsetXORSum(int* nums, int numsSize) { 
+    int r = 0, i = 0;
+    while(numsSize--) r |= nums[i++];  
+    return r << --i;
+}
