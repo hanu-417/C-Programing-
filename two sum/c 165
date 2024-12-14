@@ -1,0 +1,31 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* decrypt(int* code, int codeSize, int k, int* returnSize) {
+    *returnSize=codeSize;
+    int* decrypted_code=(int*)malloc(*returnSize *sizeof(int));
+    if(k==0){
+        for(int i=0; i<codeSize; i++){ decrypted_code[i]=0;}
+    }
+    else if(k>0){
+        for(int i=0; i<codeSize; i++){
+            int j=0, l=i+1, sum=0;
+            while(j<k){
+                if(l>=codeSize){ l=0; }
+                sum=sum+code[l++];  j++;
+            }
+            decrypted_code[i]=sum;
+        }
+    }
+    else{
+        for(int i=codeSize-1; i>=0; i--){
+            int j=0, l=i-1, sum=0;
+            while(j>k){
+                if(l<0){ l=codeSize-1; }
+                sum=sum+code[l--];  j--;
+            }
+            decrypted_code[i]=sum;
+        }  
+    }
+    return decrypted_code;
+}
