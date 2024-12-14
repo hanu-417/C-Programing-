@@ -1,0 +1,28 @@
+int maxAscendingSum(int* nums, int numsSize) {
+    // primary sum counter
+    int sum = 0;
+    // secondary sum counter
+    int lsum = 0;
+    // temporary storage for the
+    // last number of the (sub)array
+    size_t last = 0;
+
+    // iterate over the given array
+    for(size_t i = 0; i < numsSize; i++) {
+        // if the subarray stops ascending
+        if(nums[i] <= last) {
+            // assign sum to lsum, but only
+            // if sum is larger than lsum
+            // to get the largest sum
+            lsum = sum > lsum ? sum : lsum;
+            sum = 0;
+        }
+
+        sum += nums[i];
+        last = nums[i];
+    }
+
+    // as above in the if statement,
+    // return the maximum of sum and lsum
+    return sum > lsum ? sum : lsum;
+}
