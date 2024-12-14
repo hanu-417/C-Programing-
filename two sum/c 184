@@ -1,0 +1,20 @@
+int maximumPopulation(int** logs, int n, int* logsColSize) {
+    int *freq=(int*)malloc(101*sizeof(int));
+    for(int i=0;i<100;i++)freq[i]=0;
+    for(int i=0;i<n;i++){
+        int birth=logs[i][0],death=logs[i][1];
+        while(birth<death){
+            freq[birth-1950]++;
+            birth++;
+        }
+    }
+    int max=0,ans=0;
+    for(int i=0;i<=100;i++){
+        if(max<freq[i]){
+            max=freq[i];
+            ans=i;
+        }
+    }
+    free(freq);
+    return 1950+ans;
+}
