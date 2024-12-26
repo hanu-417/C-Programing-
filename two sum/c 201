@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int>flattenMatrix(vector<vector<int>>& grid)
+    {
+        vector<int>flattenedArray;
+        for(int i=0;i<grid.size();i++)
+        {
+            for(int j=0;j<grid[0].size();j++)
+            {
+                flattenedArray.push_back(grid[i][j]);
+            }
+        }
+        return flattenedArray;
+    }
+    int minOperations(vector<vector<int>>& grid, int x) {
+        vector<int>flattenedArray=flattenMatrix( grid);
+     sort( flattenedArray.begin(),  flattenedArray.end());
+        int mid=(flattenedArray.size()-1)/2;
+        int result=0;
+        for(int i=0;i<flattenedArray.size();i++)
+        {
+            if((flattenedArray[i]-flattenedArray[mid])%x!=0)
+            {
+                return -1;
+            }
+            result+=abs(flattenedArray[i]-flattenedArray[mid])/x;
+            
+        }
+        return result;
+    }
+};
